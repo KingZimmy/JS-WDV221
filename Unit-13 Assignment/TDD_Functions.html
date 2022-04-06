@@ -1,0 +1,147 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>13-4: TDD Function </title>
+<script>
+
+ // Create a function called salesDiscount that will accept the sale price and the discount rate. 
+        //It will return the discounted sales price.
+        //assumption: discount can be a string containing %
+        //assumption: return discounted sales price should be numeric, not formatted string
+
+        function salesDiscount(inPrice,inDiscount){
+            //return inPrice;
+            //return parseFloat(inDiscount)/100;
+            //return inPrice - (inPrice*inDiscount);
+
+            //inDiscount is a string then parse/100 else use it
+
+            if(typeof inPrice == 'string'){ //price must be a number
+                return 'error';
+            }
+
+            if(inPrice < 0){        //price must be 0 or greater
+                return 'error';
+            }
+
+            if( typeof inDiscount == 'string'){
+                // using substring to chop off last character, since that's where a % would go.
+                // https://stackoverflow.com/questions/952924/how-do-i-chop-slice-trim-off-last-character-in-string-using-javascript
+                let percentTest = inDiscount.substring(0, inDiscount.length - 1)
+
+                //if parseFloat returns a negative value return -1 else /100 to get a decimal
+                if(parseFloat(inDiscount) < 0 || isNaN(parseFloat(inDiscount)) ){
+                    return 'error';
+                } else if (/%$/.test(percentTest) || isNaN(percentTest)) {
+                    // now if "%" is in percent test, or its NaN, return 'error'.
+                    return 'error';
+                }
+                else{
+                    discount = parseFloat(inDiscount)/100;
+                }
+            }
+            else{
+                discount = inDiscount;
+            }
+            // converting to float with 2 decimals.
+            // wrapping it in Number because toFixed changes it to string
+            return Number(parseFloat(inPrice - (inPrice * discount)).toFixed(2));
+        }
+
+        // test cases ran in class.
+        // console.log("parseFloat(a) " + parseFloat('a')); 
+        // console.log("first test: " +  salesDiscount() );
+        // console.log("10.00 10% " +  salesDiscount(10.00,'10%') );
+        // console.log("10.00 .10 " +  salesDiscount(10.00,.10) );
+        // console.log("0 20% " +  salesDiscount(0,'20%') );
+        // console.log("10.00 0 " +  salesDiscount(10.00,0) );
+        // console.log("-1 10% " +  salesDiscount(-1,'10%') );
+        // console.log("a 10% " +  salesDiscount('a','10%') ); 
+        // console.log("10.00 '-10%' " +  salesDiscount(10.00,'-10%') );
+        // console.log("10.00 'a' " +  salesDiscount(10.00,'a') );
+
+
+        
+        function tester(expectation, result) {
+            if (expectation === result) {
+                
+                console.log('%cPASS:', 'color: green;');
+            } else {
+                console.log('%cFAIL:', 'color: red;');
+            }
+        }
+
+        
+       tester(9.00, salesDiscount(10.00, '10%'));
+        console.log('10.00, 10%, expect 9.00, result: ' + salesDiscount(10.00, '10%'));
+        
+        tester(9.00, salesDiscount(10.00, .10));
+        console.log('10.00, .10, expect 9.00, result: ' + salesDiscount(10.00, .10));
+        
+        tester(0, salesDiscount(0, '20%'));
+        console.log('0, 20%, expect 0, result: ' + salesDiscount(0, '20%'));
+        
+        tester(10, salesDiscount(10.00, 0));
+        console.log('10.00, 0, expect 10, result: ' + salesDiscount(10.00, 0));
+        
+        tester('error', salesDiscount(-1, '10%'));
+        console.log('-1, 10%, expect error, result: ' + salesDiscount(-1, '10%'));
+        
+        tester('error', salesDiscount('a', '10%'))    
+        console.log('a, 10%, expect error, result: ' + salesDiscount('a', '10%'));
+        
+        tester('error', salesDiscount(10.00, '-10%'));
+        console.log('10.00, -10%, expect error, result: ' + salesDiscount(10.00, '-10%'));
+        
+        tester('error', salesDiscount(10.00, 'a'));
+        console.log('10.00, a, expect error, result: ' + salesDiscount(10.00, 'a'));
+        
+        tester(8.12, salesDiscount(8.55, '5%'));
+        console.log('8.55, 5%, expect 8.1225?   s/b 8.12, result: ' + salesDiscount(8.55, '5%'));
+        
+        tester(8.34, salesDiscount(8.55, '2.5%'));
+        console.log('8.55, 8.33625 s/b 8.34, result: ' + salesDiscount(8.55, '2.5%'));
+        
+        tester(8.34, salesDiscount(8.55, .025));
+        console.log('8.55, .025, 8.33625? s/b 8.34, result: ' + salesDiscount(8.55, .025));
+        
+        tester(4.28, salesDiscount(8.55, 0.5));
+        console.log('8.55, 0.5% 8.50725 s/b 8.51, result: ' + salesDiscount(8.55, 0.5));
+
+        
+        // Added to process sales discount as a string with a % character
+
+        
+        tester('error', salesDiscount(10.00, '%'));
+        console.log('10.00, %, expect: error, result: ' + salesDiscount(10.00, '%'));
+        
+        tester('error', salesDiscount(10.00, '%5'));
+        console.log('10.00, %5, expect: error, result:  ' + salesDiscount(10.00, '%5'));
+        
+        tester('error', salesDiscount(10.00, '5%3'));
+        console.log('10.00, 5%3, expect: error, result:  ' + salesDiscount(10.00, '5%3'));
+        
+        tester('error', salesDiscount(10.00, '%53%'));
+        console.log('10.00, %53%, expect: error, result:  ' + salesDiscount(10.00, '%53%'));
+        
+        tester('error', salesDiscount(10.00, 'a%'));
+        console.log('10.00, a%, expect: error, result:  ' + salesDiscount(10.00, 'a%'));
+        
+        tester('error', salesDiscount(10.00, '%a%'));
+        console.log('10.00, %a%, expect: error, result:  ' + salesDiscount(10.00, '%a%'));
+        
+        tester('error', salesDiscount(10.00, '4a%'));
+        console.log('10.00, 4a%, expect: error, result:  ' + salesDiscount(10.00, '4a%'));
+        
+        tester('error', salesDiscount(10.00, '%4a%'));
+        console.log('10.00, %4a%, expect: error, result:  ' + salesDiscount(10.00, '%4a%'));
+	
+	
+</script>	
+	
+</head>
+
+<body>
+</body>
+</html>

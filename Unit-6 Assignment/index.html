@@ -1,0 +1,35 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>WDV221 - Date Object </title>
+	<style>
+	div {
+  background-color: lightcoral;
+  width: 300px;
+  border: 15px solid #BB4042;
+  padding: 50px;
+  margin: 20px;
+  text-align: center;
+}
+	</style>
+</head>
+
+<body>
+	<div>
+	<h1>WDV 221 - Date Object</h1>
+	<p><strong>What is the date?</strong></p>
+		<script>
+	 let todayDate = new Date();   
+    function formatMMDDYYYY(inputDate) {
+    
+    let day = inputDate.getDate();
+    let month = inputDate.getMonth() + 1;
+    let year = inputDate.getFullYear();
+    return month + "/" + day + "/" + year;
+} 
+    document.write(formatMMDDYYYY(todayDate))
+	</script>
+	</div>
+</body>
+</html>

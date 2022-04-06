@@ -1,0 +1,79 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>TDD</title>
+	<script>
+	
+	/*Create a function called salesDiscount that will accept the sale price and the discount rate. 
+		* It will return the discounted sales price.
+		* assumption: discount can be a string containing %
+		* assumption: return discounted sales price should be numeric, not formatted string */
+
+		let salesReturn;
+		const regex = /[a-zA-Z]/; //Regex for lower and uppercase letters
+
+		function salesDiscount(inPrice, inDiscount) {
+			if (typeof inPrice == 'string' || inPrice < 0) { //if price is a string OR it's less than 0
+				return -1;
+			}
+
+			if (typeof inDiscount == 'string') { //If inDiscount is a string
+				//(If inDiscount includes a % AND the % isn't at the end of the string) OR (if inDiscount has letter(s)
+				if ((inDiscount.includes('%') && inDiscount.at(inDiscount.length - 1) != '%') || (regex.test(inDiscount))) {
+					return -1;
+				}
+
+				inDiscount = parseFloat(inDiscount);
+				Number(inDiscount); //If inDiscount is not a number, it is set as NaN
+
+				if (inDiscount < 0 || isNaN(inDiscount)) { //If inDiscount is less than 0 OR is NaN
+					return -1;
+				} else if (inDiscount < 0.1 ) { //If entered discount is aleady in decimal form -- Assuming max is 100% discount
+					discount = inDiscount;
+				} else {
+					discount = inDiscount / 100;
+				}
+			} else {
+				discount = inDiscount;
+			}
+
+			salesReturn = inPrice - (inPrice * discount);
+			if (salesReturn == 0) { //Formatting purposes, it doesn't get a fixed decimal place)
+				return salesReturn;
+			} else { //If it's a number OTHER than 0, it gets a fixed, rounded decimal place
+				return salesReturn.toFixed(2);
+			}
+		}
+
+		//Test cases
+		console.log("parseFloat(a) " + parseFloat('a')); 
+		console.log("first test: " +  salesDiscount());
+		console.log("10.00 10% " +  salesDiscount(10.00,'10%'));
+		console.log("10.00 .10 " +  salesDiscount(10.00, .10));
+		console.log("0 20% " +  salesDiscount(0,'20%'));
+		console.log("10.00 0 " +  salesDiscount(10.00,0));
+		console.log("-1 10% " +  salesDiscount(-1,'10%'));
+		console.log("a 10% " +  salesDiscount('a','10%')); 
+		console.log("10.00 '-10%' " +  salesDiscount(10.00,'-10%'));
+		console.log("10.00 'a' " +  salesDiscount(10.00,'a'));
+		console.log("8.55 '5%' " +  salesDiscount(8.55,'5%'));
+		console.log("8.55 '2.5' " +  salesDiscount(8.55,'2.5'));
+		console.log("8.55 '.025%' " +  salesDiscount(8.55,'.025%'));
+		console.log("8.55 '0.5%' " +  salesDiscount(8.55,'0.5%'));
+		console.log("10.00 '%' " +  salesDiscount(10.00,'%'));
+		console.log("10.00 '%5' " +  salesDiscount(10.00,'%5'));
+		console.log("10.00 '5%3' " +  salesDiscount(10.00,'5%3'));
+		console.log("10.00 '%53%' " +  salesDiscount(10.00,'%53%'));
+		console.log("10.00 'a%' " +  salesDiscount(10.00,'a%'));
+		console.log("10.00 '%a%' " +  salesDiscount(10.00,'%a%'));
+		console.log("10.00 '4a%' " +  salesDiscount(10.00,'4a%'));
+		console.log("10.00 '%4a%' " +  salesDiscount(10.00,'%4a%'));
+	
+	</script>
+	
+</head>
+
+<body>
+</body>
+</html>

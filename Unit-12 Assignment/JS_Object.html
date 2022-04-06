@@ -1,0 +1,105 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>WDV 221 - JS Object</title>
+	<style>
+	h1 {
+			color: antiquewhite;
+		}
+		
+	div {
+  background-color: lightcoral;
+  width: 300px;
+  border: 15px solid #BB4042;
+  padding: 50px;
+  margin: 20px;
+  text-align: center;
+}
+	
+	</style>
+<script>
+	
+	//let bookTitles = ["Beginning Javascript", "Logic with ES6", "Javascript Objects Made Easy"];
+    //let bookPrices = [19.99, 29.49, 999.99];
+    //let bookAuthor = ["Smith", "Johnson-Parker", "Westin" ];
+    
+    let book1 = {
+        bookTitle: "Beginning Javascript",
+        bookPrice: 19.99,
+        bookAuthor: "Smith",
+        studentDiscountPrice: function (){
+        return " Discount Price: " + (this.bookPrice * .8).toFixed(2);    
+    }
+		}
+
+    let book2 = {
+        bookTitle: "Logic with ES6",
+        bookPrice: 29.49,
+        bookAuthor: "Johnson-Parker",
+        studentDiscountPrice: function (){
+        return " Discount Price: " + (this.bookPrice * .8).toFixed(2); 
+    }
+		}
+    
+     let book3 = {
+         bookTitle: "Javascript Objects Made Easy",
+         bookPrice: 999.99,
+         bookAuthor: "Westin",
+         studentDiscountPrice: function (){
+         return " Discount Price: " + (this.bookPrice * .8).toFixed(2); 
+     }
+		}
+    
+    let javascriptBooks = [
+        {
+        bookTitle: "Beginning Javascript",
+        bookPrice: 19.99,
+        bookAuthor: "Smith"
+        },
+        {
+        bookTitle: "Logic with ES6",
+        bookPrice: 29.49,
+        bookAuthor: "Johnson-Parker"
+        },
+        {
+        bookTitle: "Javascript Objects Made Easy",
+        bookPrice: 999.99,
+        bookAuthor: "Westin"
+        }
+        ];		
+	
+</script>
+	
+	
+	</head>
+
+<body>
+	<div>
+	<h1>WDV 221: 12-1 Create JS Objects</h1>
+	
+	<h3>Display the Contents of Each Book Object on the Web Page.</h3>
+	<p><script>
+        document.write("Book Title: " + book1.bookTitle + ", Price: " + book1.bookPrice + ", Author: " + book1.bookAuthor + book1.studentDiscountPrice());
+    </script></p>
+   
+	<p><script>
+        document.write("Book Title: " + book2.bookTitle + ", Price: " + book2.bookPrice + ", Author: " + book2.bookAuthor + book2.studentDiscountPrice());
+     </script></p>   
+    
+	<p><script>   
+        document.write("Book Title: " + book3.bookTitle + ", Price: " + book3.bookPrice + ", Author: " + book3.bookAuthor + book3.studentDiscountPrice());   
+    </script></p>
+	<h3>Display All the Information for Each Book to the Web Page.</h3>
+	<ul>
+    <script>
+
+        for(let x=0; x<javascriptBooks.length; x++){
+            document.write("<li>" + javascriptBooks[x].bookTitle + " " + javascriptBooks[x].bookPrice + " " + javascriptBooks[x].bookAuthor + "</li>");
+        }
+
+    </script>
+    </ul>
+	</div>
+</body>
+</html>
